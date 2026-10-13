@@ -22,22 +22,46 @@ export const register = async(req, res, next) => {
 // @Desc  Login user
 // @Route POST /api/auth/login
 // @access Public
-export const login = async(req, res, next) => {};
+export const login = async(req, res, next) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+};
 
 
 // @desc  Get user profile
 // @route Get /api/auth/profile
 // @access Private
-export const getProfile = async(req, res, next) => {};
+export const getProfile = async(req, res, next) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+};
 
 
 // @desc  Update user profile
 // @route Put /api/auth/profile
 // @access Private
-export const updateProfile = async(req, res, next) => {};
+export const updateProfile = async(req, res, next) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+};
 
 
 // @desc  change password
 // @route POST /api/auth/change-password
 // @access Private
-export const changePassword = async(req, res, next) => {};
+export const changePassword = async(req, res, next) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+};
