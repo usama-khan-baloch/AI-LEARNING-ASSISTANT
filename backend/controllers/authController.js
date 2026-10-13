@@ -49,7 +49,7 @@ export const register = async(req, res, next) => {
             message: 'User registered successfully'
         })
     } catch (error) {
-        
+        next(error)
     }
 }
 
@@ -58,9 +58,51 @@ export const register = async(req, res, next) => {
 // @access Public
 export const login = async(req, res, next) => {
     try {
+        const {email, password} = req.body;
+        //validate input
+        if(!email || !password) {
+            return res.status(401).json({
+                success: false,
+                error: 'please provide email and password',
+                statusCode: 400
+            })
+        }
         
+        //check for user (include password for comparison)
+        const user = await User.findOne({ email }).select("+password");
+        if(!user) {
+            return res.status(401).json({
+                success: false,
+                error: 'Invalid credentials',
+                statusCode: 401
+            })
+        }
+        //Check password
+        const isMatch = await user.matchPassword(password);
+        if(!isMatch) {
+            return res.status(401).json({
+                success: false,
+                error: 'Invalid credentials',
+                statusCode: 401
+            })
+        }
+        // genrate token
+        const token = await GenrateToken(user._id);
+        
+        res.status(200).json({
+            success: true,
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                profileImage: user.profileImage
+            },
+            token,
+           message: "Login successfully"
+        })
+
     } catch (error) {
-        
+        next(error)
     }
 };
 
