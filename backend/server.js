@@ -10,7 +10,7 @@ import { fileURLToPath } from "url";
 import { error } from "console";
 import errorHandler from "./middlewares/errorHandle.js";
 import connectDB from "./config/db.js";
-
+import authRoutes from './routes/authRoutes.js'
 // ES6 module __dirname alternative
 
 const __filename = fileURLToPath(import.meta.url);

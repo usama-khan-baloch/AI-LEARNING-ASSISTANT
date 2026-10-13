@@ -13,7 +13,41 @@ const GenrateToken = async(id) => {
 // @access Public
 export const register = async(req, res, next) => {
     try {
-        
+        const {username, email, password} = req.body;
+
+        //check if user already exist
+      const userExist = await User.findOne({$or: [ { email } ] });
+        if(userExist) {
+            return res.status(400).json({
+                success: false,
+                error: userExist.email ? 'Email already registered' : 'UserName already aken',
+                statusCode: 400
+            })
+        }
+
+        // Create User
+        const user = await User.create({
+            username,
+            email,
+            password
+        });
+
+        // Genrate token
+        const token = await GenrateToken(user._id);
+        res.status(201).json({
+            success: true,
+            data: {
+                user: {
+                    id: user._id,
+                    username: user.username,
+                    email: user.email,
+                    profileImage: user.profileImage,
+                    createdAt: user.createdAt
+                },
+                token
+            },
+            message: 'User registered successfully'
+        })
     } catch (error) {
         
     }

@@ -1,7 +1,7 @@
 import express from "express";
 import { body } from "express-validator";
 import {register, login, getProfile, updateProfile, changePassword} from '../controllers/authController.js';
-import protect from '../middlewares/authMiddleware.js';
+import protect from '../middlewares/auth.js';
 
 
 const router = express.Router();
@@ -9,12 +9,21 @@ const router = express.Router();
 // Validation middleware
 const registerValidation = [
     body('username').trim().isLength({min: 3}).withMessage('username must be at least 3 charaters'),
-    body('email').normalizeEmail().withMessage('please provide a valid email'),
+    
+    body('email')
+    .trim()
+    .isEmail()
+    .withMessage('Please provide a valid email')
+    .normalizeEmail(),
     body('password').isLength({min: 6}).withMessage('password must be at least 6 characters'),
 ];
 
 const LoginValidation = [
-     body('email').normalizeEmail().withMessage('please provide a valid email'),
+     body('email')
+    .trim()
+    .isEmail()
+    .withMessage('Please provide a valid email')
+    .normalizeEmail(),
      body('password').notEmpty().withMessage('password is required')
 ];
 
