@@ -117,7 +117,12 @@ export const releventChunks = (chunks, query, maxChunks) => {
 
 
     // Common stop words to exclude
-    const stopWords = new setInterval([]);
+    const stopWords = new setInterval([ "the", "is", "are", "was", "were", "and", "or", "but", "for", "with", "this",
+        "that",
+        "what",
+        "how",
+        "you",
+        "your"]);
     
 
     // Extract clean and query words
